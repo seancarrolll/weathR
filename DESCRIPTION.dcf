@@ -1,0 +1,16 @@
+Package: weathR
+Type: Package
+Title: Climate data analysis and visualisation tools
+Version: 0.1.0
+Author: Jack Castles, Alanna Collier, Sean Carrol, Roisin Murphy
+Maintainer: Jack Castles <Jack.castles.2020@mumail.ie>
+Description: Provides tools for loading, cleaning, analysing, and visualising
+seasonal climate data. The package includes functions to preprocess climate
+datasets, compute seasonal statistics (e.g., mean, median), and visualise
+trends interactively. It is designed for simplicity and efficiency,
+incorporating advanced R features such as base R pipes, S3 methods, and robust
+error handling. A default dataset, the Dublin Airport Climate Averages
+(1981–2010), is used to demonstrate the package's capabilities.
+License: MIT
+Encoding: UTF-8
+LazyData: true
