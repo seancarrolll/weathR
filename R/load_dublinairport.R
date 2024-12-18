@@ -1,3 +1,9 @@
+#' Load the Dublin Airport Dataset
+#'
+#' This function loads the Dublin Airport weather dataset.
+#' @return A data frame containing the metric averages for Dublin Airport.
+#' @export
+
 load_dublinairport <- function() {
 
   if (!exists("dublin_airport", envir = .GlobalEnv)) {
@@ -9,9 +15,9 @@ load_dublinairport <- function() {
     stop("The dataset structure is invalid. Check that it contains the expected columns.")
   }
 
-  # Return the dataset
+ class(dublin_airport) <- "dublinairport"
+
   return(dublin_airport)
 }
 
-
-
+load_dublinairport()
