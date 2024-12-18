@@ -20,4 +20,4 @@ load_dublinairport <- function() {
   return(dublin_airport)
 }
 
-load_dublinairport()
+
