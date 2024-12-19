@@ -28,10 +28,27 @@ colnames(transposed_data)[1] <- "Mean Temperature"
 colnames(transposed_data)[2] <- "Mean Daily Sunshine (hours)"
 colnames(transposed_data)[3] <- "Mean Rainfall"
 
+
 head(transposed_data)
 
 transposed_data <- transposed_data[-1, ]
 
 dublin_airport <- transposed_data
 
+dublin_airport$`Mean Temperature` <- as.numeric(dublin_airport$`Mean Temperature`)
+dublin_airport$`Mean Daily Sunshine (hours)` <- as.numeric(dublin_airport$`Mean Daily Sunshine (hours)`)
+dublin_airport$`Mean Rainfall` <- as.numeric(dublin_airport$`Mean Rainfall`)
+
+
+dublinairport <- function(data) {
+  if (!is.data.frame(data)) {
+    stop("Input must be a data frame.")
+  }
+  class(data) <- c("dublinairport", class(data))
+  return(data)
+}
+
+dublin_airport <- dublinairport(dublin_airport)
+
 usethis::use_data(dublin_airport, compress = "xz", overwrite = TRUE)
+
