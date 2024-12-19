@@ -1,13 +1,23 @@
 Package: weathR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Climate data analysis and visualisation tools
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Authors@R: c(person("Jack", "Castles", email="jack.castles.2020@mumail.ie", role=c("aut"),
+  person("Alanna", "Collier", email="alanna.collier.2022@mumail.ie", role="aut"),
+  person("Sean", "Carroll", email="sean.carroll.2021@mumail.ie", role="aut","cre"),
+  person("Roisin", "Murphy", email="roisin.murphy.2022@mumail.ie," role="aut")
+Maintainer: Sean Carroll <sean.carroll.2021@mumail.ie>
+Description: Provides tools for loading, cleaning, analysing, and visualising
+seasonal climate data. The package includes functions to preprocess climate
+datasets, compute seasonal statistics (e.g., mean, median), and visualise
+trends interactively. It is designed for simplicity and efficiency,
+incorporating advanced R features such as base R pipes, S3 methods, and robust
+error handling. A default dataset, the Dublin Airport Climate Averages
+(1981–2010), is used to demonstrate the package's capabilities.
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-Depends: 
-    R (>= 3.5)
+RoxygenNote: 7.3.2
+Depends: R (>= 4.4.0)
+URL: https://github.com/seancarrolll/weathR.git
+
