@@ -1,11 +1,11 @@
 plot.summarise <- function(data, ...) {
-  # Check if the input data has the required columns
+
   if (!is.data.frame(data) ||
       !all(c("Mean Temperature", "Mean Daily Sunshine (hours)", "Month") %in% colnames(data))) {
     stop("Input must be a data frame with columns: 'Mean Temperature', 'Mean Daily Sunshine (hours)', and 'Month'.")
   }
 
-  # Convert the data to a long format for plotting
+
   data_long <- data |>
     tidyr::pivot_longer(
       cols = c("Mean Temperature", "Mean Daily Sunshine (hours)"),
@@ -13,10 +13,9 @@ plot.summarise <- function(data, ...) {
       values_to = "Value"
     )
 
-  # Ensure the 'Month' column is treated correctly, avoiding duplicate factor levels
   data_long$Month <- factor(data$Month, levels = unique(data$Month))  # Explicitly reference 'Month' column
 
-  # Generate the base plot
+
   p <- ggplot2::ggplot(data_long, ggplot2::aes(x = Month, y = Value, color = Metric, group = Metric)) +
     ggplot2::geom_line(size = 1.2) +
     ggplot2::geom_point(size = 3) +
@@ -35,7 +34,7 @@ plot.summarise <- function(data, ...) {
     gganimate::transition_states(Month, transition_length = 2, state_length = 1) +
     ggplot2::labs(title = "Month: {closest_state}")
 
-  # Animate and display
+
   animation <- gganimate::animate(p, duration = 5, fps = 20, width = 500, height = 400, renderer = gganimate::gifski_renderer())
   print(animation)
   invisible(animation)
