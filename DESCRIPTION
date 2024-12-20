@@ -22,11 +22,11 @@ RoxygenNote: 7.3.2
 Depends: R (>= 4.4.0)
 URL: https://github.com/seancarrolll/weathR.git
 Imports:
-    janitor,
-    dplyr,
-    ggplot2,
-    gganimate
+  janitor,
+  dplyr,
+  ggplot2,
+  gganimate
 Suggests: 
-    knitr,
-    rmarkdown
+  knitr,
+  rmarkdown
 VignetteBuilder: knitr
