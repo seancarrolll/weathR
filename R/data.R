@@ -6,8 +6,9 @@ colnames(dublin_airport) <- dublin_airport[2, ]
 
 dublin_airport <- dublin_airport[-c(1, 2), ]
 
-dublin_airport |>
-  clean_names()
+dublin_airport <- dublin_airport |>
+  janitor::clean_names()
+
 
 head(dublin_airport)
 
