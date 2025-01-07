@@ -1,22 +1,22 @@
 summarise.dublinairport <- function(object, filter_var = NULL, filter_value = NULL,
-                                    summary_func = mean, ...) {
+                                    summary_func = mean, correlation = TRUE, ...) {
 
   if (!inherits(object, "dublinairport")) {
     stop("The dataset must be of class 'dublinairport'")
   }
 
-  numeric_columns <- object[, sapply(object, is.numeric)]
+  numeric_columns <- object |>
+    dplyr::select(where(is.numeric))
 
   if (ncol(numeric_columns) == 0) {
-    stop("The dataset contains no numeric columns to summarize.")
+    stop("The dataset has no numeric columns.")
   }
-
 
   object <- if (!is.null(filter_var) && !is.null(filter_value)) {
     if (!filter_var %in% colnames(object)) {
       stop(paste("The column", filter_var, "does not exist in the dataset."))
     }
-    object[object[[filter_var]] >= filter_value, ]
+    object |> dplyr::filter(.data[[filter_var]] >= filter_value)
   } else {
     object
   }
@@ -26,18 +26,17 @@ summarise.dublinairport <- function(object, filter_var = NULL, filter_value = NU
     tibble::as_tibble()
 
   if (any(is.na(summary_table))) {
-    warning("Some summary results may contain missing values (NA).")
+    warning("Some results may contain missing values.")
   }
 
-  return(summary_table)
+  output <- list(summary = summary_table)
+
+  if (correlation) {
+    correlation_matrix <- numeric_columns |>
+      cor(method = "pearson")
+
+    output$correlation_matrix <- correlation_matrix
+  }
+
+  return(output)
 }
-
-# Examples
-summarise.dublinairport(dublin_airport)
-summarise.dublinairport(dublin_airport, summary_func = median)
-summarise.dublinairport(dublin_airport, summary_func = quantile, probs = c(0.25, 0.5, 0.75))
-summarise.dublinairport(dublin_airport, summary_func = var)
-
-
-
-
