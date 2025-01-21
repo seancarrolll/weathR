@@ -19,10 +19,21 @@
 #' @export
 #'
 #' @examples
+#' data(dublin_airport)
 #'
+#' result <- summarise.dublinairport(dublin_airport)
 #'
+#' result_with_correlation <- summarise.dublinairport(dublin_airport, correlation = TRUE)
+#'
+#' result_sd <- summarise.dublinairport(dublin_airport, summary_func = sd)
+#'
+#' result_quantiles <- summarise.dublinairport(dublin_airport,
+#'                                             summary_func = quantile,
+#'                                             probs = c(0.25, 0.5, 0.75))
+
+
 summarise.dublinairport <- function(object, filter_var = NULL, filter_value = NULL,
-                                    summary_func = mean, correlation = TRUE, ...) {
+                                    summary_func = mean, correlation = FALSE, ...) {
 
   if (!inherits(object, "dublinairport")) {
     stop("The dataset must be of class 'dublinairport'")
@@ -63,6 +74,3 @@ summarise.dublinairport <- function(object, filter_var = NULL, filter_value = NU
 
   return(output)
 }
-
-
-
