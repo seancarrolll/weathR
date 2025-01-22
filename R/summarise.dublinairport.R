@@ -25,7 +25,9 @@
 #'
 #' result_with_correlation <- summarise.dublinairport(dublin_airport, correlation = TRUE)
 #'
-#' result_sd <- summarise.dublinairport(dublin_airport, summary_func = sd)
+#' summarise.dublinairport(dublin_airport, filter_var = "Mean Rainfall", filter_value = 60)
+#'
+#' summarise.dublinairport(dublin_airport, filter_var = "Mean Temperature", filter_value = 10)
 #'
 #' result_quantiles <- summarise.dublinairport(dublin_airport,
 #'                                             summary_func = quantile,
@@ -39,14 +41,7 @@ summarise.dublinairport <- function(object, filter_var = NULL, filter_value = NU
     stop("The dataset must be of class 'dublinairport'")
   }
 
-  numeric_columns <- object |>
-    dplyr::select(where(is.numeric))
-
-  if (ncol(numeric_columns) == 0) {
-    stop("The dataset has no numeric columns.")
-  }
-
-  object <- if (!is.null(filter_var) && !is.null(filter_value)) {
+ object <- if (!is.null(filter_var) && !is.null(filter_value)) {
     if (!filter_var %in% colnames(object)) {
       stop(paste("The column", filter_var, "does not exist in the dataset."))
     }
@@ -54,10 +49,16 @@ summarise.dublinairport <- function(object, filter_var = NULL, filter_value = NU
   } else {
     object
   }
+  numeric_columns <- object |>
+    dplyr::select(where(is.numeric))
+
+  if (ncol(numeric_columns) == 0) {
+    stop("The dataset has no numeric columns.")
+  }
 
   summary_table <- numeric_columns |>
     sapply(summary_func, ...) |>
-    tibble::as_tibble()
+    tibble::as_tibble(rownames = "Variable")
 
   if (any(is.na(summary_table))) {
     warning("Some results may contain missing values.")
@@ -74,3 +75,5 @@ summarise.dublinairport <- function(object, filter_var = NULL, filter_value = NU
 
   return(output)
 }
+
+
