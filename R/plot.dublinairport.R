@@ -1,59 +1,85 @@
-plot_summarise <- function(data, ...) {
 
-  if (!is.data.frame(data) ||
-      !all(c("Mean Temperature", "Mean Daily Sunshine (hours)", "Month") %in% colnames(data))) {
-    stop("Input must be a data frame with columns: 'Mean Temperature', 'Mean Daily Sunshine (hours)', and 'Month'.")
+library(ggplot2)
+library(gganimate)
+library(tidyr)
+library(dplyr)
+library(gifski)
+
+
+plot_summarise <- function(data) {
+  required_cols <- c("Month", "Mean.Temperature", "Mean.Daily.Sunshine..hours.", "Mean.Rainfall")
+  if (!all(required_cols %in% colnames(data))) {
+    stop("The dataset must include columns: 'Month', 'Mean.Temperature', 'Mean.Daily.Sunshine..hours.', and 'Mean.Rainfall'.")
   }
 
 
-  if (!is.factor(data$Month)) {
-    warning("The 'Month' column is not a factor. Converting it to a factor.")
-    data$Month <- factor(data$Month, levels = unique(data$Month))  # Ensure correct month order
-  }
+  data$Month <- factor(data$Month, levels = c("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                                              "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"))
 
 
-  data_long <- data |>
-    tidyr::pivot_longer(
-      cols = c("Mean Temperature", "Mean Daily Sunshine (hours)"),
-      names_to = "Metric",
-      values_to = "Value"
+  data_long <- tidyr::pivot_longer(
+    data,
+    cols = c("Mean.Temperature", "Mean.Daily.Sunshine..hours.", "Mean.Rainfall"),
+    names_to = "Metric",
+    values_to = "Value"
+  )
+
+
+  data_long$Metric <- factor(data_long$Metric,
+                             levels = c("Mean.Temperature", "Mean.Daily.Sunshine..hours.", "Mean.Rainfall"),
+                             labels = c("Mean Temperature", "Mean Daily Sunshine (hours)", "Mean Rainfall")
+  )
+
+
+  data_long <- data_long %>%
+    group_by(Metric) %>%
+    mutate(
+      Value = case_when(
+        Metric == "Mean Rainfall" ~ Value/10,
+        TRUE ~ Value
+      )
     )
 
 
-  if (anyNA(data_long$Value)) {
-    warning("The dataset contains missing values in 'Value' column.")
-  }
-
-
-  if (!all(is.numeric(data_long$Value))) {
-    warning("Non-numeric data detected in 'Value'. Ensure the dataset is clean.")
-  }
-
-
-  p <- ggplot2::ggplot(data_long, ggplot2::aes(x = `Mean Daily Sunshine (hours)`, y = `Mean Temperature`, color = Metric, group = Metric)) +
-    ggplot2::geom_line(size = 1.2) +
-    ggplot2::geom_point(size = 3) +
-    ggplot2::theme_minimal() +
-    ggplot2::labs(
-      title = "Dublin Airport Climate Animation",
-      x = "Mean Daily Sunshine (hours)",
-      y = "Mean Temperature (°C)",
-      color = "Metrics"
+  p <- ggplot(data_long, aes(x = Month, y = Value, color = Metric)) +
+    geom_line(aes(group = Metric), size = 1.2) +
+    geom_point(size = 3) +
+    theme_minimal() +
+    labs(
+      title = "Dublin Airport Climate Trends",
+      x = "Month",
+      color = "Metric"
     ) +
-    ggplot2::scale_color_brewer(palette = "Set2") +
-    ggplot2::theme(
+    scale_color_brewer(palette = "Set2") +
+    theme(
       legend.position = "bottom",
-      plot.title = ggplot2::element_text(hjust = 0.5)
-    ) +
-    gganimate::transition_states(Month, transition_length = 2, state_length = 1) +
-    ggplot2::labs(title = "Month: {closest_state}")
-
-  animation <- gganimate::animate(p, duration = 5, fps = 20, width = 500, height = 400, renderer = gganimate::gifski_renderer())
+      plot.title = element_text(hjust = 0.5, size = 14),
+      plot.subtitle = element_text(hjust = 0.5, size = 12),
+      axis.text.x = element_text(angle = 45, hjust = 1)
+    )
 
 
-  message("Animation created successfully. Displaying...")
+  p_animated <- p +
+    transition_reveal(as.numeric(Month)) +
+    ease_aes('linear')
 
-  print(animation)
-  invisible(animation)
+
+  animation <- animate(
+    p_animated,
+    duration = 10,
+    fps = 30,
+    width = 800,
+    height = 600,
+    renderer = gifski_renderer(),
+    nframes = 200
+  )
+
+
+  anim_save("dublin_climate.gif", animation = animation)
+
+  return(animation)
 }
-plot.summarise(dublin_airport)
+
+
+ anim <- plot_summarise(dublin_airport)
+ print(anim)
