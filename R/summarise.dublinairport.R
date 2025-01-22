@@ -3,7 +3,7 @@
 #'Summarises numeric columns in the `dublinairport` dataset. Allows optional filtering
 #' of rows based on a column and value. Calculates a correlation matrix if specified.
 #'
-#' @param object A dataset of the class "dublin airport".
+#' @param object A dataset of the class "dublinairport".
 #' @param filter_var A character string specifying the name of the column to filter by.
 #'  If 'NULL', no filtering occurs. The default is \code{NULL}.
 #' @param filter_value A numeric value that filters rows where \code{filter_var} is greater
@@ -13,7 +13,7 @@
 #' @param correlation A logical indicating whether to include the correlation matrix in the output. Defaults to \code{TRUE}.
 #' @param ... Additional arguments used by \code{summary_func}.
 #'
-#' @returns A list containing:
+#' @return A list containing:
 #'  \item {summary}{A tibble of the summary statistic for the numeric columns.}
 #'  \item {correlation_matrix}{A correlation matrix of the numeric columns (if 'correlation = TRUE').}
 #' @export
