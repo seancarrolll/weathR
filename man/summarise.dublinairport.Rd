@@ -4,11 +4,7 @@
 \alias{summarise.dublinairport}
 \title{Summarise Dublin Airport Weather Data}
 \usage{
-<<<<<<< HEAD
-\method{summarise}{dublinairport}(
-=======
 summarise.dublinairport(
->>>>>>> 7ecf8ec02f5f5bb54b59f98de6eabf2bc9ff5002
   object,
   filter_var = NULL,
   filter_value = NULL,
