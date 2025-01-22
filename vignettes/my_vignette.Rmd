@@ -1,0 +1,227 @@
+---
+title: "weathr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{my_vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>,"
+)
+```
+
+```{r setup}
+if (!requireNamespace("weathR", quietly = TRUE)) {
+  message("The 'weathR' package is not installed. Using mock data for demonstration.")
+} else {
+  library(weathR)
+}
+```
+  
+##INTRODUCTION
+The weathR package is designed for analysing and visualising seasonal climate
+data. It provides tools for loading datasets, computing summary statistics,
+and creating animated visualisations of climate trends.
+
+This vignette walks through key functionalities of the package, including
+loading the built-in Dublin Airport Climate Averages dataset, summarising data, 
+and visualising trends
+
+
+##INSTALLATION
+Once in R you can type at the R command below to install weathR
+# install.packages("pak")
+pak::pak("seancarroll/weathR")
+
+##Loading the Dataset
+The weathR package comes with a built-in dataset: the Dublin Airport Climate
+Averages (1981–2010). To load this dataset, use the load_dublinairport() function:
+
+```{r}
+if (!requireNamespace("weathR", quietly = TRUE)) {
+  message("Using a mock dataset for demonstration.")
+  
+  # Mock dataset
+  climate_data <- data.frame(
+    Month = factor(
+      c("January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"),
+      levels = month.name
+    ),
+    Temperature = c(5.0, 5.5, 7.0, 9.0, 12.0, 15.0, 17.0, 16.5, 14.0, 10.5, 7.5, 5.5)
+  )
+} else {
+  library(weathR)
+  
+  # Load the dataset
+  climate_data <- load_dublinairport()
+}
+
+# Display the first few rows of the dataset
+head(climate_data)
+
+```
+
+#Summarising Data
+The summarise.dublinairport() function allows you to compute summary statistics
+for the dataset, including mean, median, and quantiles. You can optionally 
+filter the dataset by season or month.
+```{r}
+if (exists("summarise.dublinairport")) {
+  # Summarize the dataset using weathR
+  summary_table <- summarise.dublinairport(climate_data)
+} else {
+  #Mock summary table for demonstration
+  summary_table <- data.frame(
+    Statistic = c("Mean Temperature"),
+    Value = c(mean(climate_data$Temperature, na.rm = TRUE))
+  )
+}
+
+#Display the summary table
+print(summary_table)
+```
+
+#Creating Visualisations
+Static Visualisation
+You can create static plots of climate data trends using ggplot2. For example,
+a line plot of monthly average temperatures can be created like this:
+ 
+library(ggplot2)
+```{r}
+if (!exists("climate_data") || nrow(climate_data) == 0) {
+  message("Using mock data for plotting.")
+
+  #Mock dataset with realistic values
+  climate_data <- data.frame(
+    Month = factor(
+      c("January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"),
+      levels = month.name
+    ),
+    Temperature = c(5.0, 5.5, 7.0, 9.0, 12.0, 15.0, 17.0, 16.5, 14.0, 10.5, 7.5, 5.5)
+  )
+}
+
+#Create the static visualisation
+library(ggplot2)
+ggplot(climate_data, aes(x = Month, y = Temperature, group = 1)) +
+  geom_line(color = "blue", size = 1) +
+  geom_point(color = "red", size = 2) +
+  labs(
+    title = "Monthly Average Temperatures",
+    x = "Month",
+    y = "Temperature (°C)"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+#Animated Visualisation
+The plot_summarise() function generates an animated visualization of seasonal
+climate trends using gganimate and ggplot2:
+```{r}
+if (exists("plot_summarise") && !is.null(climate_data)) {
+  # Animated visualization using plot_summarise
+  animation <- plot_summarise(climate_data)
+  
+  # Display the animation
+  animation
+} else {
+  message("The 'plot_summarise()' function is not available or climate_data is missing. Skipping animated visualisation.")
+}
+```
+
+#Example Workflow
+Here is a complete workflow demonstrating how to load, summarize, and visualize 
+climate data using weathR:
+```{r}
+if (!requireNamespace("weathR", quietly = TRUE)) {
+  message("The 'weathR' package is not installed. Using mock data for demonstration.")
+  
+  #Mock dataset
+  climate_data <- data.frame(
+    Month = factor(
+      c("January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"),
+      levels = month.name
+    ),
+    Temperature = c(5.0, 5.5, 7.0, 9.0, 12.0, 15.0, 17.0, 16.5, 14.0, 10.5, 7.5, 5.5)
+  )
+  
+  #Mock summary
+  summary_table <- data.frame(
+    Statistic = c("Mean Temperature"),
+    Value = c(mean(climate_data$Temperature))
+  )
+  
+  #Mock animation (placeholder message)
+  animation <- "Animated visualisation requires 'weathR' and its dependencies."
+} else {
+  library(weathR)
+  
+  #Load the dataset
+  climate_data <- load_dublinairport()
+  
+  #Summarise the dataset
+  summary_table <- summarise.dublinairport(climate_data)
+  
+  #Create an animated visualisation
+  animation <- plot_summarise(climate_data)
+}
+
+# Print the summary table
+print(summary_table)
+
+# Display the animation (if available)
+if (exists("animation") && is.character(animation)) {
+  message(animation)
+} else {
+  animation
+}
+
+```
+
+#Model Fitting and Custom Analysis
+In addition to the default functions, you can extend your analysis by applying 
+custom models or filters to the data. For instance, you can focus on a specific
+season or use advanced visualisation options:
+```{r}
+#Ensure the climate_data object exists and has valid data
+if (!exists("climate_data") || !"Season" %in% colnames(climate_data)) {
+  message("The 'climate_data' object is missing or does not have a 'Season' column. Using mock data.")
+
+  #Mock dataset with realistic values
+  climate_data <- data.frame(
+    Month = factor(
+      rep(c("June", "July", "August"), each = 1),
+      levels = month.name
+    ),
+    Temperature = c(15.0, 17.0, 16.5),
+    Season = rep("Summer", 3)
+  )
+}
+
+#Filter dataset for summer months
+summer_data <- climate_data[climate_data$Season == "Summer", ]
+
+#Static plot for summer months
+library(ggplot2)
+ggplot(summer_data, aes(x = Month, y = Temperature, group = 1)) +
+  geom_line(color = "blue", size = 1) +
+  geom_point(color = "red", size = 2) +
+  labs(
+    title = "Summer Monthly Temperatures",
+    x = "Month",
+    y = "Temperature (°C)"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
