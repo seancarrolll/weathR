@@ -19,7 +19,7 @@ plot_summarise <- function(data) {
                                    labels = c("Mean Temperature", "Mean Daily Sunshine (hours)", "Mean Rainfall")
   )
 
-  data_long <- dplyr::group_by(data_long, Metric) %>%
+  data_long <- dplyr::group_by(data_long, Metric) |>
     dplyr::mutate(
       Value = dplyr::case_when(
         Metric == "Mean Rainfall" ~ Value / 10,
