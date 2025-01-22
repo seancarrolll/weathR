@@ -1,7 +1,3 @@
-#' Plot and Animate Dublin Airport Climate Trends
-#'
-#' Creates an animated plot visualising climate data from Dublin Airport, including trends in mean temperature,
-#' mean daily sunshine, and mean rainfall over the months of the year.
 
 plot_summarise <- function(data) {
   required_cols <- c("Month", "Mean Temperature", "Mean Daily Sunshine (hours)", "Mean Rainfall")
@@ -25,9 +21,9 @@ plot_summarise <- function(data) {
   )
 
   data_long <- data_long %>%
-    group_by(Metric) %>%
-    mutate(
-      Value = case_when(
+   dplyr :: group_by(Metric) %>%
+    dplyr:: mutate(
+      Value = dplyr ::  case_when(
         Metric == "Mean Rainfall" ~ Value / 10,
         TRUE ~ Value
       )
