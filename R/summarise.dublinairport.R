@@ -70,6 +70,10 @@ summarise.dublinairport <- function(object, filter_var = NULL, filter_value = NU
     correlation_matrix <- numeric_columns |>
       cor(method = "pearson")
 
+    if (!inherits(correlation_matrix, "matrix")) {
+      stop("Correlation matrix is not of class 'matrix'")
+    }
+
     output$correlation_matrix <- correlation_matrix
   }
 

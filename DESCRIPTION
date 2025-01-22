@@ -27,6 +27,8 @@ Imports:
   ggplot2,
   gganimate
 Suggests: 
-  knitr,
-  rmarkdown
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
+Config/testthat/edition: 3
