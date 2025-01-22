@@ -5,6 +5,7 @@
 \title{Summarise Dublin Airport Weather Data}
 \usage{
 <<<<<<< HEAD
+<<<<<<< HEAD
 summarise.dublinairport(
 =======
 <<<<<<< HEAD
@@ -17,6 +18,9 @@ summarise.dublinairport(
 >>>>>>> 7ecf8ec02f5f5bb54b59f98de6eabf2bc9ff5002
 >>>>>>> e4283a3467935ac801dad749de5c7b77b02af9ba
 >>>>>>> c6099e125a791f228db1112cfdcd1a13b037eb52
+=======
+\method{summarise}{dublinairport}(
+>>>>>>> 48a7d686c95a59b9edcd4df2ec976c1832e742c1
   object,
   filter_var = NULL,
   filter_value = NULL,
@@ -26,7 +30,7 @@ summarise.dublinairport(
 )
 }
 \arguments{
-\item{object}{A dataset of the class "dublin airport".}
+\item{object}{A dataset of the class "dublinairport".}
 
 \item{filter_var}{A character string specifying the name of the column to filter by.
 If 'NULL', no filtering occurs. The default is \code{NULL}.}
