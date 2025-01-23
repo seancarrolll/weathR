@@ -13,10 +13,14 @@
 #' @param correlation A logical indicating whether to include the correlation matrix in the output. Defaults to \code{TRUE}.
 #' @param ... Additional arguments used by \code{summary_func}.
 #'
-#' @return A list containing:
-#'  \item {summary}{A tibble of the summary statistic for the numeric columns.}
-#'  \item {correlation_matrix}{A correlation matrix of the numeric columns (if 'correlation = TRUE').}
+#' @return A list with two possible elements:
+#'   \item{summary}{A tibble of the summary statistic for the numeric columns.}
+#'   \item{correlation_matrix}{A correlation matrix of the numeric columns (if 'correlation = TRUE').}
 #' @export
+#'
+#' @importFrom dplyr filter select
+#' @importFrom tibble as_tibble
+#' @importFrom stats cor
 #'
 #' @examples
 #' data(dublin_airport)
