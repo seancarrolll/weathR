@@ -36,7 +36,7 @@ key functions for:
 ##INSTALLATION
 Once in R you can type at the R command below to install weathR
 # install.packages("pak")
-pak::pak("seancarroll/weathR")
+pak::pak("seancarrolll/weathR")
 
 #Loading the Dataset
 The weathR package comes with a built-in dataset: the Dublin Airport Climate
@@ -51,13 +51,23 @@ head(climate_data)
 ```
 
 #Summarising Data
-The summarise.dublinairport() function allows you to compute summary statistics
-for the dataset, including mean, median, and quantiles. You can optionally 
-filter the dataset by season or month.
+The summarise.dublinairport() function computes summary statistics for numeric columns in the Dublin Airport dataset. You can filter rows based on a column and value, specify a custom summary function, and optionally include a correlation matrix of numeric variables
 ```{r}
 #Generate summary statistics
-summary_table <- summarise.dublinairport(climate_data)
-print(summary_table)
+result <- summarise.dublinairport(dublin_airport)
+print(result)
+
+result_with_correlation <- summarise.dublinairport(dublin_airport, correlation = TRUE)
+print(result_with_correlation)
+
+filter_rainfall <- summarise.dublinairport(dublin_airport, filter_var = "Mean Rainfall", filter_value = 60)
+print(filter_rainfall)
+
+result_quantiles <- summarise.dublinairport(dublin_airport,
+                                             summary_func = quantile,
+                                             probs = c(0.25, 0.5, 0.75))
+
+print(result_quantiles)
 ```
 
 #Creating Visualisations
