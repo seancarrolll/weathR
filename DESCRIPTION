@@ -28,6 +28,9 @@ Imports:
   gganimate,
   tibble,
   tidyr
+  usethis,
+  devtools,
+  roxygen2
 Suggests: 
     knitr,
     rmarkdown,
