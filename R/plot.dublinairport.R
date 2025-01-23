@@ -94,7 +94,7 @@
       nframes = 200
     )
 
-    gganimate::anim_save("dublin_climate.gif", animation = animation)
+    gganimate::anim_save("inst/extdata/dublin_climate.gif", animation = animation)
 
     return(animation)
   }
