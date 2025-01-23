@@ -27,10 +27,11 @@ Imports:
   ggplot2,
   gganimate,
   tibble,
-  tidyr
+  tidyr,
   usethis,
   devtools,
-  roxygen2
+  roxygen2,
+  gifski
 Suggests: 
     knitr,
     rmarkdown,

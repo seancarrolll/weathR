@@ -30,9 +30,9 @@ The default is \code{mean}.}
 \item{...}{Additional arguments used by \code{summary_func}.}
 }
 \value{
-A list containing:
- \item {summary}{A tibble of the summary statistic for the numeric columns.}
- \item {correlation_matrix}{A correlation matrix of the numeric columns (if 'correlation = TRUE').}
+A list with two possible elements:
+  \item{summary}{A tibble of the summary statistic for the numeric columns.}
+  \item{correlation_matrix}{A correlation matrix of the numeric columns (if 'correlation = TRUE').}
 }
 \description{
 Summarises numeric columns in the `dublinairport` dataset. Allows optional filtering
