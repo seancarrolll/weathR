@@ -19,6 +19,7 @@
 #' @export
 #'
 #' @importFrom dplyr filter select
+#' @importFrom tidyselect where
 #' @importFrom tibble as_tibble
 #' @importFrom stats cor
 #'
