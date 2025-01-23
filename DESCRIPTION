@@ -25,7 +25,9 @@ Imports:
   janitor,
   dplyr,
   ggplot2,
-  gganimate
+  gganimate,
+  tibble,
+  tidyr
 Suggests: 
     knitr,
     rmarkdown,
