@@ -44,7 +44,7 @@ Averages (1981–2010). To load this dataset, use the load_dublinairport() funct
 
 ```{r}
 #Load the Dublin Airport climate dataset
-climate_data <- load_dublinairport()
+climate_data <- dublin_airport
 
 #Display the first few rows
 head(climate_data)
@@ -102,7 +102,7 @@ Here is a complete workflow demonstrating how to load, summarize, and visualize
 climate data using weathR:
 ```{r}
 #Load dataset
-climate_data <- load_dublinairport()
+climate_data <- dublin_airport
 
 #Generate summary
 summary_table <- summarise.dublinairport(climate_data)
