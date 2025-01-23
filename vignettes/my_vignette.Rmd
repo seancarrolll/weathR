@@ -85,56 +85,64 @@ if (exists("summarise.dublinairport")) {
 #Display the summary table
 print(summary_table)
 ```
+#Data Peparation for Plotting
+Next is to reshape the data so that you are able to fit it into a suitable plot. 
+```{r}
+# Reshape data for plotting
+data_long <- tidyr::pivot_longer(
+ climate_data,
+ cols = c("Temperature"),
+ names_to = "Variables",
+ values_to = "Value"
+)
+```
 
 #Creating Visualisations
 Static Visualisation
 You can create static plots of climate data trends using ggplot2. For example,
 a line plot of monthly average temperatures can be created like this:
  
-library(ggplot2)
-```{r}
-if (!exists("climate_data") || nrow(climate_data) == 0) {
-  message("Using mock data for plotting.")
 
-  #Mock dataset with realistic values
-  climate_data <- data.frame(
-    Month = factor(
-      c("January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"),
-      levels = month.name
-    ),
-    Temperature = c(5.0, 5.5, 7.0, 9.0, 12.0, 15.0, 17.0, 16.5, 14.0, 10.5, 7.5, 5.5)
-  )
-}
-
-#Create the static visualisation
+```{r, warning=FALSE, message=FALSE}
 library(ggplot2)
-ggplot(climate_data, aes(x = Month, y = Temperature, group = 1)) +
-  geom_line(color = "blue", size = 1) +
-  geom_point(color = "red", size = 2) +
+#Create Static plot with temperature variable
+p <- ggplot(data_long, aes(x = Month, y = Value, color = Variables, group = Variables)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 3) +
+  theme_minimal() +
   labs(
-    title = "Monthly Average Temperatures",
+    title = "Monthly Temperature Trends",
     x = "Month",
     y = "Temperature (°C)"
   ) +
-  theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
+p
 ```
 
 #Animated Visualisation
-The plot_summarise() function generates an animated visualization of seasonal
+The plot_summarise() function generates an animated visualisation of seasonal
 climate trends using gganimate and ggplot2:
-```{r}
-if (exists("plot_summarise") && !is.null(climate_data)) {
-  # Animated visualization using plot_summarise
-  animation <- plot_summarise(climate_data)
-  
-  # Display the animation
-  animation
-} else {
-  message("The 'plot_summarise()' function is not available or climate_data is missing. Skipping animated visualisation.")
-}
+```{r ,warning=FALSE, message=FALSE}
+
+library(gganimate)
+# Add animation effects
+p_animated <- p +
+  transition_reveal(as.numeric(Month)) +
+  ease_aes('linear')
+
+# Render the animation
+animation <- animate(
+  p_animated,
+  duration = 10,
+  fps = 20,
+  width = 800,
+  height = 600,
+  renderer = gifski_renderer(),
+  nframes = 200
+)
+
+# Display the animation
+animation
 ```
 
 #Example Workflow
