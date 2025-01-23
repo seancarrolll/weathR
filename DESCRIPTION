@@ -28,10 +28,13 @@ Imports:
   gganimate,
   tibble,
   tidyr,s
+  tidyr,
   usethis,
   devtools,
   roxygen2,
   gifski,
+  rlang,
+  tidyselect,
   stats
 Suggests: 
     knitr,
