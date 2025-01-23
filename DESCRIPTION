@@ -31,7 +31,10 @@ Imports:
   usethis,
   devtools,
   roxygen2,
-  gifski
+  gifski,
+  rlang,
+  tidyselect,
+  stats
 Suggests: 
     knitr,
     rmarkdown,

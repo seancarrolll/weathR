@@ -22,6 +22,7 @@
 #' @importFrom tidyselect where
 #' @importFrom tibble as_tibble
 #' @importFrom stats cor
+#' @importFrom rlang .data
 #'
 #' @examples
 #' data(dublin_airport)
