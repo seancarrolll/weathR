@@ -2,7 +2,6 @@
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^README\.md$
-^vignettes/
 ^data-raw/
 ^.*\.Rhistory$
 ^.*\.RData$
@@ -10,3 +9,5 @@
 ^\.DS_Store$
 ^\.git/
 ^man/figures/
+^doc$
+^Meta$
