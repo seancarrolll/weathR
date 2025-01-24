@@ -1,6 +1,6 @@
 #' Summarise Dublin Airport Weather Data
 #'
-#'Summarises numeric columns in the `dublinairport` dataset. Allows optional filtering
+#' Summarises numeric columns in the `dublinairport` dataset. Allows optional filtering
 #' of rows based on a column and value. Calculates a correlation matrix if specified.
 #'
 #' @param object A dataset of the class "dublinairport".
@@ -26,7 +26,7 @@
 #' @examples
 #' data(dublin_airport)
 #'
-#' result <- summarise.dublinairport(dublin_airport)
+#' result <- summarise.dublinairport(dublin_airport, summary_func = "mean")
 #'
 #' result_with_correlation <- summarise.dublinairport(dublin_airport, correlation = TRUE)
 #'
@@ -84,5 +84,3 @@ summarise.dublinairport <- function(object, filter_var = NULL, filter_value = NU
 
   return(output)
 }
-
-

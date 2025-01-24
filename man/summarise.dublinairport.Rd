@@ -41,7 +41,7 @@ of rows based on a column and value. Calculates a correlation matrix if specifie
 \examples{
 data(dublin_airport)
 
-result <- summarise.dublinairport(dublin_airport)
+result <- summarise.dublinairport(dublin_airport, summary_func = "mean")
 
 result_with_correlation <- summarise.dublinairport(dublin_airport, correlation = TRUE)
 

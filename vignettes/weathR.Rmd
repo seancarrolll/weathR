@@ -15,5 +15,96 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
+if (!requireNamespace("weathR", quietly = TRUE)) {
+  message("The 'weathR' package is not installed. Using mock data for demonstration.")
+} else {
+library(weathR)
+}
+```
+##INTRODUCTION
+
+__weathR__ is an R package that provides easy access to climate data from 1981 - 2010 at Dublin Airport. The package includes functions for loading, analyzing, and visualizing this data. 
+Three main functions are provided in the package:
+
+1. 'load_dublinairport()' this loads the Dublin Airport dataset in a tidy format for further analysis. This dataset includes monthly climate averages for temperature, sunshine duration, and rainfall.
+
+2. 'summarise.dublinairport()' summarises numeric columns in the dublinairport dataset. The function can filter rows based on user defined criteria and calculate a correlation matrix if prompted.
+
+3. 'plot.dublinairport()' creates an animated line plot that visualises climate trends, including temperature, daily sunshine, and rainfall across the months of the year.
+
+
+##INSTALLATION
+
+_weathR_ will run in Windows, Mac OS X, or Linux. To install it you first need to install [R](https://cran.r-project.org/). Installing [RStudio](https://www.rstudio.com/) as a nice desktop environment for using R is also recommended.
+
+Once in R you can type at the R command prompt:
+
+```{r, eval=FALSE}
+install.packages('devtools')
+devtools::install_github('seancarrolll/weathR')
+```
+
+to install the latest development version of the package from the __weathR__ [GitHub page](https://github.com/seancarrolll/weathR). 
+
+In either case, if you then type:
+
+```{r, eval=FALSE}
 library(weathR)
 ```
+
+it will load in all the aforementioned __weathR__ functions.
+
+Some features may not yet be fully tested, and occasionally this version might be liable to break when it is in the process of being updated. If you find bugs or want to suggest new features please visit the [GitHub issues page](https://github.com/seancarrolll/weathR/issues). 
+
+
+## `load_dublinairport()`
+
+This function loads the Dublin Airport dataset provided by the __weathR__ package. The dataset contains monthly climate averages for temperature, sunshine duration, and rainfall recorded at Dublin Airport from 1981 to 2010. 
+
+The function returns a tidy data frame, where each row corresponds to a month and columns represent climate variables. 
+
+```{r}
+# Load the data
+dublinairport <- load_dublinairport()
+print(head(dublinairport))
+```
+
+
+## 'summarise.dublinairport'
+
+The summarise.dublinairport() function allows you to generate quick summaries of the climate data. It can filter rows based on a user defined condition and compute statistical summaries (e.g., mean, median) or a correlation matrix between numeric variables.
+
+For example, to calculate the mean for all climate variables:
+
+```{r}
+# Summarise the data
+summary <- summarise.dublinairport(dublinairport)
+print(summary)
+
+# Summarise the data and specify the statistical measure.
+summary_sd <-  summarise.dublinairport(dublinairport, summary_func = "sd")
+print(summary_sd)
+```
+To filter the data and calculate statistics:
+```{r}
+# Summarise filtered data
+filter_rainfall <- summarise.dublinairport(dublinairport, filter_var = "Mean Rainfall", filter_value = 60)
+print(filter_rainfall)
+
+filter_temperature <- summarise.dublinairport(dublinairport, filter_var = "Mean Temperature", filter_value = 14)
+print(filter_temperature) 
+```
+
+The function can also return a correlation matrix of the numeric columns:
+```{r}
+#Summary with correlation matrix
+summary_with_correlation <- summarise.dublinairport(dublinairport, correlation = TRUE)
+print(summary_with_correlation)
+```
+
+## 'plot.dublinairport()'
+
+The plot.dublinairport() function creates animated visualizations of climate trends over the months. This function uses ggplot2 for visualization and outputs a gganimate object.
+
+By default, it plots line graphs of the three main climate variables: temperature, sunshine hours, and rainfall.
+

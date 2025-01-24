@@ -24,16 +24,15 @@ load_dublinairport <- function() {
 
   if (!exists("dublin_airport", envir = .GlobalEnv)) {
     warning("The dataset 'dublin_airport' is not loaded into your environment. Loading it now.")
-    utils::data("dublin_airport", package = "WeathR")
+    utils::data("dublin_airport", package = "weathR")
   }
 
   if (!all(c("Mean Temperature", "Mean Daily Sunshine (hours)", "Mean Rainfall") %in% names(dublin_airport))) {
     stop("The dataset structure is invalid. Check that it contains the expected columns.")
   }
 
- class(dublin_airport) <- "dublinairport"
+ dublin_airport <- tibble::as_tibble(dublin_airport)
+ class(dublin_airport) <- c("dublinairport", class(dublin_airport))
 
   return(dublin_airport)
 }
-
-
