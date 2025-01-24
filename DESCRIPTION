@@ -38,7 +38,11 @@ Imports:
 Suggests: 
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    tidyr,
+    ggplot2,
+    gganimate,
+    gifski
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Date: 2025-01-22
