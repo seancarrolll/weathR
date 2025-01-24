@@ -27,7 +27,6 @@ Imports:
   ggplot2,
   gganimate,
   tibble,
-  tidyr,s
   tidyr,
   usethis,
   devtools,
