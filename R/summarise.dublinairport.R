@@ -55,7 +55,7 @@ summarise.dublinairport <- function(object, filter_var = NULL, filter_value = NU
     object
   }
   numeric_columns <- object |>
-    dplyr::select(tidyselect::where(is.numeric))
+    dplyr::select(object, tidyselect::where(is.numeric))
 
   if (ncol(numeric_columns) == 0) {
     stop("The dataset has no numeric columns.")

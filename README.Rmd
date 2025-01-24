@@ -1,0 +1,57 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# weathR R package
+
+## Written by Roisin Murphy, Alanna Collier, Sean Carroll and Jack Castles. 
+<!-- badges: start -->
+<!-- badges: end -->
+
+## Description
+
+The goal of weathR is to provide tools for loading, cleaning, analysing, and visualising climate data taken from Dublin airport throughout 1981-2010. The package includes functions to preprocess climate data, compute seasonal statistics (e.g., mean, median), and visualise trends interactively.
+
+## Installation
+
+You can install the development version of weathR from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("seancarrolll/weathR")
+```
+
+## Example
+
+This function loads the Dublin Airport dataset and ensures that it is properly formatted and classified as a "dublinairport" object.
+It then displays the first 6 rows:
+
+```{r example}
+library(weathR)
+dublinairport <- load_dublinairport()
+print(head(dublinairport))
+```
+
+```{r}
+summarise.dublinairport(dublinairport)
+```
+
+Subsequently, an animated line plot visualising trends in temperature, daily sunshine, and rainfall over the months can be created using the following function:
+ 
+```{r animation example, warning=FALSE, messages= FALSE}
+ #anim <- plot_summarise(dublinairport)
+ # print(anim)
+```
+
+A more through introduction can be found in the `weathR` vignette.
